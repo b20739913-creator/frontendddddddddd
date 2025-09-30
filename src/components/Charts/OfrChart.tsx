@@ -26,17 +26,30 @@ export default function OFRChart({ chartData, hierarchyChartData }: OFRChartProp
 
   // Transform API data to chart format - handle both device and hierarchy data
   const data = useMemo(() => {
+    const seenTimes = new Set<string>();
+    const getUniqueTime = (timestamp: string): string => {
+      let time = new Date(timestamp).toLocaleTimeString();
+      let counter = 1;
+      let uniqueTime = time;
+      while (seenTimes.has(uniqueTime)) {
+        uniqueTime = `${time}-${counter}`;
+        counter++;
+      }
+      seenTimes.add(uniqueTime);
+      return time;
+    };
+
     if (chartData?.chartData) {
       // Device data
       return chartData.chartData.map(point => ({
-        time: new Date(point.timestamp).toLocaleTimeString(),
+        time: getUniqueTime(point.timestamp),
         line: point.ofr || 0,
         standard: point.ofr || 0,
       }));
     } else if (hierarchyChartData?.chartData) {
       // Hierarchy aggregated data
       return hierarchyChartData.chartData.map(point => ({
-        time: new Date(point.timestamp).toLocaleTimeString(),
+        time: getUniqueTime(point.timestamp),
         line: point.totalOfr || 0,
         standard: point.totalOfr || 0,
       }));
