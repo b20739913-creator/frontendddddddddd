@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { SearchIcon, ChevronRightIcon } from 'lucide-react';
+import { Search as SearchIcon, ChevronRight as ChevronRightIcon } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { useTheme } from '../../hooks/useTheme';
 import {
