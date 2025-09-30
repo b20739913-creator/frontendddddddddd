@@ -26,17 +26,12 @@ export default function GFRChart({ chartData, hierarchyChartData }: GFRChartProp
 
   // Transform API data to chart format - handle both device and hierarchy data
   const data = useMemo(() => {
-    const seenTimes = new Set<string>();
+    const seenTimes = new Map<string, number>();
     const getUniqueTime = (timestamp: string): string => {
-      let time = new Date(timestamp).toLocaleTimeString();
-      let counter = 1;
-      let uniqueTime = time;
-      while (seenTimes.has(uniqueTime)) {
-        uniqueTime = `${time}-${counter}`;
-        counter++;
-      }
-      seenTimes.add(uniqueTime);
-      return time;
+      const time = new Date(timestamp).toLocaleTimeString();
+      const count = seenTimes.get(time) || 0;
+      seenTimes.set(time, count + 1);
+      return count === 0 ? time : `${time}.${count}`;
     };
 
     if (chartData?.chartData) {

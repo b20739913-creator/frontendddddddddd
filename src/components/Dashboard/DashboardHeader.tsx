@@ -139,21 +139,6 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
             }`}
           />
         </div>
-
-        {/* Version Badge */}
-        <div
-          className={`h-10 px-4 rounded-full flex items-center justify-center ${
-            theme === 'dark' ? 'bg-[#1D2147]' : 'bg-[#EAEAEA]'
-          }`}
-        >
-          <span
-            className={`text-xs font-medium ${
-              theme === 'dark' ? 'text-gray-400' : 'text-[#555758]'
-            }`}
-          >
-            v1.0.0
-          </span>
-        </div>
       </div>
     </header>
   );
